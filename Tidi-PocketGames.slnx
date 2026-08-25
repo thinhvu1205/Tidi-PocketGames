@@ -1,0 +1,21 @@
+﻿<Solution>
+  <Project Path="gpm_common.csproj" />
+  <Project Path="unity.webp.csproj" />
+  <Project Path="spine-unity-examples.csproj" />
+  <Project Path="UniTask.csproj" />
+  <Project Path="gpm_webview.csproj" />
+  <Project Path="UniTask.Linq.csproj" />
+  <Project Path="spine-unity-editor.csproj" />
+  <Project Path="gpm_manager.csproj" />
+  <Project Path="spine-unity.csproj" />
+  <Project Path="gpm_communicator.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="UniTask.Addressables.csproj" />
+  <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="UniTask.TextMeshPro.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="WebP.Editor.csproj" />
+  <Project Path="spine-unity-examples-editor.csproj" />
+  <Project Path="UniTask.Editor.csproj" />
+  <Project Path="UniTask.DOTween.csproj" />
+</Solution>
