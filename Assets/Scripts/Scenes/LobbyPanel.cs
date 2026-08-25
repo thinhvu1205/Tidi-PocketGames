@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Gpm.WebView;
 using SimpleJSON;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,6 @@ public class LobbyPanel : GameListener
     [SerializeField] private TextMeshProUGUI m_AssetTMPUGUI, m_UsernameTMPUGUI, m_CountUnreadMailsTMPUGUI;
     [SerializeField] private PagesSlider m_BannersPS;
     [SerializeField] private PoolGroup m_GameIconsPG;
-    [SerializeField] private HtmlWebViewPanel m_GameHWVP;
     private List<PoolInfo> _GamesDataPIs = new();
     private WaitForSeconds _BannersAutoSwipeDelayWFS = new(3f), _UnreadMailsNotiWFS = new(5f);
 
@@ -48,7 +48,7 @@ public class LobbyPanel : GameListener
     public void DoClickCICO()
     {
         UIManager.DoClickBase();
-        if (Database.DB.PlayToken.Equals(""))
+        if (string.IsNullOrEmpty(Database.DB.PlayToken))
         {
             UIManager.Announce("PLease login first!");
             return;
@@ -65,7 +65,7 @@ public class LobbyPanel : GameListener
     public void DoClickMail()
     {
         UIManager.DoClickBase(m_FooterIOOs[3].transform);
-        if (Database.DB.PlayToken.Equals(""))
+        if (string.IsNullOrEmpty(Database.DB.PlayToken))
         {
             UIManager.Announce("PLease login first!");
             return;
@@ -75,7 +75,7 @@ public class LobbyPanel : GameListener
     }
     public void DoClickAccount()
     {
-        if (Database.DB.PlayToken.Equals(""))
+        if (string.IsNullOrEmpty(Database.DB.PlayToken))
         {
             UIManager.DoClickBase(m_FooterIOOs[4].transform);
             UIManager.Announce("PLease login first!");
@@ -185,7 +185,33 @@ public class LobbyPanel : GameListener
                 }
             case DataSender.LAUNCH_GAME:
                 {
-                    m_GameHWVP.OpenHtml(_data);
+                    GpmWebView.ShowHtmlString(_data,
+                        new GpmWebViewRequest.Configuration()
+                        {
+                            style = GpmWebViewStyle.POPUP,
+                            orientation = GpmOrientation.UNSPECIFIED,
+                            isClearCookie = true,
+                            isClearCache = true,
+                            isNavigationBarVisible = true,
+                            isCloseButtonVisible = true,
+                            margins = new GpmWebViewRequest.Margins
+                            {
+                                hasValue = true,
+                                left = 0,
+                                top = 0,
+                                right = 0,
+                                bottom = 0
+                            },
+                            supportMultipleWindows = true,
+#if UNITY_IOS   
+                                        contentMode = GpmWebViewContentMode.MOBILE,
+                                        isMaskViewVisible = true,
+#endif  
+                        },
+                        null,
+                        new List<string>() { "USER_ CUSTOM_SCHEME" }
+                    );
+
                     //                     GpmWebView.ShowUrl(
                     //                         URL,
                     //                         new GpmWebViewRequest.Configuration()
