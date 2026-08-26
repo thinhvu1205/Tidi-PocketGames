@@ -23,7 +23,6 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(sendGetRequest());
         IEnumerator sendGetRequest()
         {
-
             string url = Database.BASE_URL + _apiName + _tail, data = "";
             if (_dataJO != null)
             {

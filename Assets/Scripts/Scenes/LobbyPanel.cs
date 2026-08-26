@@ -18,6 +18,24 @@ public class LobbyPanel : GameListener
     [SerializeField] private PoolGroup m_GameIconsPG;
     private List<PoolInfo> _GamesDataPIs = new();
     private WaitForSeconds _BannersAutoSwipeDelayWFS = new(3f), _UnreadMailsNotiWFS = new(5f);
+    private const string _WebViewCloseScheme = "gpmclose";
+    private const string _WebViewCloseButtonJs =
+        "(function(){" +
+        "function addCloseBtn(){" +
+        "if(document.getElementById('gpm-unity-close'))return;" +
+        "var parent=document.body||document.documentElement;" +
+        "if(!parent)return;" +
+        "var b=document.createElement('button');" +
+        "b.id='gpm-unity-close';" +
+        "b.type='button';" +
+        "b.textContent='\\u00D7';" +
+        "b.style.cssText='position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:2147483647;width:40px;height:40px;border:0;border-radius:20px;background:rgba(0,0,0,.55);color:#fff;font-size:28px;line-height:40px;padding:0;-webkit-tap-highlight-color:transparent;';" +
+        "b.onclick=function(e){e.preventDefault();e.stopPropagation();location.href='" + _WebViewCloseScheme + "://close';};" +
+        "parent.appendChild(b);" +
+        "}" +
+        "if(document.body)addCloseBtn();" +
+        "else document.addEventListener('DOMContentLoaded',addCloseBtn);" +
+        "})();";
 
     #region Button
     public void DoClickOpenLoginPanel()
@@ -130,19 +148,22 @@ public class LobbyPanel : GameListener
                 {
                     JSONArray dataJA = JSON.Parse(_data)["games"].AsArray;
                     Database.DB.GamesInfoD.Clear();
+                    Dictionary<int, string> tagNamesD = new();
                     foreach (JSONNode aJN in dataJA)
                     {
                         JSONArray itemJA = aJN["tags"].AsArray;
                         List<GameTag> itemGTs = new();
                         foreach (JSONNode itemJN in itemJA)
                         {
-                            itemGTs.Add(new()
+                            GameTag aGT = new()
                             {
                                 Id = itemJN["id"].AsInt,
                                 Name = itemJN["name"].Value,
                                 Slug = itemJN["slug"].Value,
                                 SortOrder = itemJN["sortOrder"].AsInt
-                            });
+                            };
+                            itemGTs.Add(aGT);
+                            tagNamesD.TryAdd(aGT.Id, aGT.Name);
                         }
                         GameInfo aGI = new()
                         {
@@ -158,6 +179,13 @@ public class LobbyPanel : GameListener
                                 try { if (m_GameIconsPG.CheckAPoolInfoIsShown(_GamesDataPIs.Find(x => x.Data == aGI))) m_GameIconsPG.RefreshUI(false); }
                                 catch { }
                             });
+                    }
+                    foreach (GamesTab aGT in m_TabGTs)
+                    {
+                        int tabId = aGT.GetId();
+                        tagNamesD.TryGetValue(tabId, out string tabName);
+                        if (string.IsNullOrEmpty(tabName)) tabName = "All Games";
+                        aGT.SetTabName(tabName.ToUpper());
                     }
                     m_TabGTs[0].DoClick();
                     break;
@@ -185,60 +213,7 @@ public class LobbyPanel : GameListener
                 }
             case DataSender.LAUNCH_GAME:
                 {
-                    GpmWebView.ShowHtmlString(_data,
-                        new GpmWebViewRequest.Configuration()
-                        {
-                            style = GpmWebViewStyle.POPUP,
-                            orientation = GpmOrientation.UNSPECIFIED,
-                            isClearCookie = true,
-                            isClearCache = true,
-                            isNavigationBarVisible = true,
-                            isCloseButtonVisible = true,
-                            margins = new GpmWebViewRequest.Margins
-                            {
-                                hasValue = true,
-                                left = 0,
-                                top = 0,
-                                right = 0,
-                                bottom = 0
-                            },
-                            supportMultipleWindows = true,
-#if UNITY_IOS   
-                                        contentMode = GpmWebViewContentMode.MOBILE,
-                                        isMaskViewVisible = true,
-#endif  
-                        },
-                        null,
-                        new List<string>() { "USER_ CUSTOM_SCHEME" }
-                    );
-
-                    //                     GpmWebView.ShowUrl(
-                    //                         URL,
-                    //                         new GpmWebViewRequest.Configuration()
-                    //                         {
-                    //                             style = GpmWebViewStyle.POPUP,
-                    //                             orientation = GpmOrientation.UNSPECIFIED,
-                    //                             isClearCookie = true,
-                    //                             isClearCache = true,
-                    //                             isNavigationBarVisible = true,
-                    //                             isCloseButtonVisible = true,
-                    //                             margins = new GpmWebViewRequest.Margins
-                    //                             {
-                    //                                 hasValue = true,
-                    //                                 left = 100,
-                    //                                 top = 50,
-                    //                                 right = 100,
-                    //                                 bottom = 0
-                    //                             },
-                    //                             supportMultipleWindows = true,
-                    // #if UNITY_IOS
-                    //                 contentMode = GpmWebViewContentMode.MOBILE,
-                    //                 isMaskViewVisible = true,
-                    // #endif
-                    //                         },
-                    //                         OnCallback,
-                    //                         new List<string>() { "USER_ CUSTOM_SCHEME" }
-                    //                     );
+                    ShowLaunchGameWebView(_data);
                     break;
                 }
         }
@@ -315,6 +290,53 @@ public class LobbyPanel : GameListener
                 m_GameIconsPG.SetControlInfo(_GamesDataPIs);
                 m_GameIconsPG.ScrollToItem(0);
             });
+        }
+    }
+
+    private void ShowLaunchGameWebView(string html)
+    {
+        GpmWebViewRequest.CustomSchemePostCommand closeCommand = new();
+        closeCommand.Close(_WebViewCloseScheme);
+        GpmWebView.ShowHtmlString(html,
+            new GpmWebViewRequest.Configuration()
+            {
+                style = GpmWebViewStyle.POPUP,
+                orientation = GpmOrientation.PORTRAIT,
+                isClearCookie = true,
+                isClearCache = true,
+                isNavigationBarVisible = false,
+                isCloseButtonVisible = false,
+                margins = new GpmWebViewRequest.Margins
+                {
+                    hasValue = true,
+                    left = 0,
+                    top = 0,
+                    right = 0,
+                    bottom = 0
+                },
+                supportMultipleWindows = true,
+                addJavascript = _WebViewCloseButtonJs,
+                customSchemePostCommand = closeCommand,
+#if UNITY_IOS
+                contentMode = GpmWebViewContentMode.MOBILE,
+                isMaskViewVisible = true,
+#endif
+            },
+            OnLaunchGameWebViewCallback,
+            new List<string>() { _WebViewCloseScheme });
+    }
+
+    private void OnLaunchGameWebViewCallback(GpmWebViewCallback.CallbackType callbackType, string data, GpmWebViewError error)
+    {
+        switch (callbackType)
+        {
+            case GpmWebViewCallback.CallbackType.PageLoad:
+                GpmWebView.ExecuteJavaScript(_WebViewCloseButtonJs);
+                break;
+            case GpmWebViewCallback.CallbackType.Scheme:
+                if (string.IsNullOrEmpty(data) == false && data.StartsWith(_WebViewCloseScheme))
+                    GpmWebView.Close();
+                break;
         }
     }
 }
