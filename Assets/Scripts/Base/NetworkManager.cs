@@ -35,7 +35,7 @@ public class NetworkManager : MonoBehaviour
                 }
             }
             using UnityWebRequest aUWR = new(url, UnityWebRequest.kHttpVerbGET);
-            Debug.Log("|     )  )=3 send GET " + url + " | " + data + " | " + Database.DB.PlayToken);
+            Debug.Log("|   ) )=3 send GET " + url + " | " + data + " | " + Database.DB.PlayToken);
             aUWR.downloadHandler = new DownloadHandlerBuffer();
             aUWR.timeout = 20;
             aUWR.SetRequestHeader("Content-Type", "application/json");
@@ -54,7 +54,7 @@ public class NetworkManager : MonoBehaviour
         {
             string url = Database.BASE_URL + _apiName, data = _dataJO.ToString();
             using UnityWebRequest aUWR = new(url, UnityWebRequest.kHttpVerbPOST);
-            Debug.Log("|     )  )=3 send POST " + url + " | " + data + " | " + Database.DB.PlayToken);
+            Debug.Log("|   ) )=3 send POST " + url + " | " + data + " | " + Database.DB.PlayToken);
             aUWR.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(data));
             aUWR.downloadHandler = new DownloadHandlerBuffer();
             aUWR.timeout = 20;
@@ -69,7 +69,7 @@ public class NetworkManager : MonoBehaviour
     }
     private void _HandleReceivedData(string _apiName, string _data)
     {
-        Debug.Log("|     )  )=3 " + _apiName + " | " + _data);
+        Debug.Log("|   ) )=3 " + _apiName + " | " + _data);
         switch (_apiName)
         {
             case DataSender.LOGIN:
@@ -157,7 +157,7 @@ public class NetworkManager : MonoBehaviour
     private void _HandleError(string _apiName, UnityWebRequest _aUWR)
     {
         string bodyError = _aUWR.downloadHandler != null ? _aUWR.downloadHandler.text : "";
-        Debug.LogError("|     )  )=3 " + _apiName + " | result: " + _aUWR.result + " | code: " + _aUWR.responseCode + " | error: " + _aUWR.error + " | details: " + bodyError);
+        Debug.LogError("|   ) )=3 " + _apiName + " | result: " + _aUWR.result + " | code: " + _aUWR.responseCode + " | error: " + _aUWR.error + " | details: " + bodyError);
         switch (_apiName)
         {
             case DataSender.QUICK_PLAY:
@@ -209,15 +209,15 @@ public class NetworkManager : MonoBehaviour
             {
                 foreach (Exception aE in aGSIU.Exception.InnerExceptions)
                 {
-                    if (aE is GoogleSignIn.SignInException aSIE) Debug.LogError("|     )  )=3 Google Sign-In error: Status: " + aSIE.Status + " | Message: " + aSIE.Message);
-                    else Debug.LogError("|     )  )=3 Google Sign-In unknown error: " + aE.GetType().Name + " | Message: " + aE.Message);
+                    if (aE is GoogleSignIn.SignInException aSIE) Debug.LogError("|   ) )=3 Google Sign-In error: Status: " + aSIE.Status + " | Message: " + aSIE.Message);
+                    else Debug.LogError("|   ) )=3 Google Sign-In unknown error: " + aE.GetType().Name + " | Message: " + aE.Message);
                 }
             }
-            else if (aGSIU.IsCanceled) Debug.LogError("|     )  )=3 Google Sign-In was canceled");
+            else if (aGSIU.IsCanceled) Debug.LogError("|   ) )=3 Google Sign-In was canceled");
             else
             {
                 string googleToken = aGSIU.Result.IdToken;
-                Debug.Log("|     )  )=3 Google Sign-In success: " + aGSIU.Result.DisplayName + " | token: " + googleToken);
+                Debug.Log("|   ) )=3 Google Sign-In success: " + aGSIU.Result.DisplayName + " | token: " + googleToken);
                 DataSender.LoginWithGoogle(googleToken);
             }
 

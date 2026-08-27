@@ -63,11 +63,16 @@ public class Database
                     _aGI.IconS = Sprite.Create(resultT2D, new Rect(0, 0, resultT2D.width, resultT2D.height), new Vector2(0.5f, 0.5f), 100f);
                     _onCompleteCb?.Invoke();
                 }
-                else Debug.LogError("|     )  )=3 WebP decode failed | " + _aGI.ImageUrl + " | " + aE);
+                else Debug.LogError("|   ) )=3 WebP decode failed | " + _aGI.ImageUrl + " | " + aE);
 
             }
         }
         finally { _GateSS.Release(); }
+    }
+    public static string FormatTime(double _seconds)
+    {
+        int t = Mathf.FloorToInt((float)_seconds);
+        return (t / 60).ToString("00") + ":" + (t % 60).ToString("00");
     }
     public static string FormatDateTime(string _original)
     {
