@@ -69,14 +69,19 @@ public class UIManager : MonoBehaviour
     public void OpenPopupSupport(Action _onCloseCb = null) => _InstantiatePopup(Database.PU_SUPPORT, _onCloseCb);
     public void OpenPopupAccount(Action _onCloseCb = null) => _InstantiatePopup(Database.PU_ACCOUNT, _onCloseCb);
     public void OpenPopupBanner(Action _onCloseCb = null) => _InstantiatePopup(Database.PU_BANNER, _onCloseCb);
-    public void OpenPopupRuleCashFlow(Action _onCloseCb = null) => _InstantiatePopup(Database.PU_RULE_CASH_FLOW, _onCloseCb);
+    public void OpenPopupRuleCashFlow(bool _isDeposit, Action _onCloseCb = null)
+        => ((PopupRuleCashFlow)_InstantiatePopup(Database.PU_RULE_CASH_FLOW, _onCloseCb)).Show(_isDeposit);
     public void OpenPopupPayBack(Action _onCloseCb = null) => Announce("Coming soon");
     public void OpenPopupChangePass(Action _onCloseCb = null) => Announce("Coming soon");
     public void OpenPopupReferral(Action _onCloseCb = null) => Announce("Coming soon");
     public void OpenPopupNotification(Action _onCloseCb = null) => Announce("Coming soon");
     public void OpenPopupPromotion(Action _onCloseCb = null) => Announce("Coming soon");
-    private void _InstantiatePopup(string _path, Action _onCloseCb = null)
-        => BundleHandler.Instantiate(BundleHandler.LoadGameObject(_path), GetParentPopup()).GetComponent<BasePopup>().SetOnCloseCb(_onCloseCb);
+    private BasePopup _InstantiatePopup(string _path, Action _onCloseCb = null)
+    {
+        BasePopup aBP = BundleHandler.Instantiate(BundleHandler.LoadGameObject(_path), GetParentPopup()).GetComponent<BasePopup>();
+        aBP.SetOnCloseCb(_onCloseCb);
+        return aBP;
+    }
 
     // public void OnApplicationQuit()
     // {

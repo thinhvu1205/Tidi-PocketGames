@@ -28,7 +28,7 @@ public class PopupDeposit : BasePopup
     }
     public void DoClickRuleDeposit()
     {
-        UIManager.INSTANCE.OpenPopupRuleCashFlow();
+        UIManager.INSTANCE.OpenPopupRuleCashFlow(true);
         UIManager.DoClickBase();
     }
     public void DoClickSupport()

@@ -41,7 +41,7 @@ public class PopupWithdraw : BasePopup
     }
     public void DoClickRuleWithdraw()
     {
-        UIManager.INSTANCE.OpenPopupRuleCashFlow();
+        UIManager.INSTANCE.OpenPopupRuleCashFlow(false);
         UIManager.DoClickBase();
     }
     public void DoClickConfirm()
