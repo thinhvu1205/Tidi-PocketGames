@@ -41,7 +41,7 @@ public class Database
     public string PlayToken = "", Username, UserId, Currency, SocialTelegram, SocialMessenger, SupportTelegram, SupportMessenger;
     public long Asset, TotalDeposit, TotalBet, RequiredBet;
     public int VipLevel;
-    public bool IsMusic = true, IsSound = true, IsOfficial;
+    public bool IsMusic, IsSound, IsOfficial;
     private readonly SemaphoreSlim _GateSS = new(6, 6);
 
     public async UniTask DownloadAndCacheGameIcons(GameInfo _aGI, CancellationToken _aCT = default, Action _onCompleteCb = null)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Gpm.WebView;
@@ -19,9 +18,8 @@ public class LobbyPanel : GameListener
     [SerializeField] private PoolGroup m_GameIconsPG;
     private List<PoolInfo> _GamesDataPIs = new();
     private WaitForSeconds _BannersAutoSwipeDelayWFS = new(3f), _UnreadMailsNotiWFS = new(5f);
-    private Action _OnCloseWebviewCb;
     private const string _WEBVIEW_CLOSE_SCHEME = "gpmclose";
-    private const string _WEBVIEW_CLOSE_BUTTON_JS = "(function(){" + "function addCloseBtn(){" + "if(document.getElementById('gpm-unity-close'))return;" + "var parent=document.body||document.documentElement;" + "if(!parent)return;" + "var b=document.createElement('button');" + "b.id='gpm-unity-close';" + "b.type='button';" + "b.textContent='\\u00D7';" + "b.style.cssText='position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:2147483647;width:40px;height:40px;border:0;border-radius:20px;background:rgba(0,0,0,.55);color:#fff;font-size:28px;line-height:40px;padding:0;-webkit-tap-highlight-color:transparent;';" + "b.onclick=function(e){e.preventDefault();e.stopPropagation();location.href='" + _WEBVIEW_CLOSE_SCHEME + "://close';};" + "parent.appendChild(b);" + "}" + "if(document.body)addCloseBtn();" + "else document.addEventListener('DOMContentLoaded',addCloseBtn);" + "})();";
+    private const string _WEBVIEW_CLOSE_BUTTON_JS = "(function(){" + "function addCloseBtn(){" + "if(document.getElementById('gpm-unity-close'))return;" + "var parent=document.body||document.documentElement;" + "if(!parent)return;" + "var b=document.createElement('button');" + "b.id='gpm-unity-close';" + "b.type='button';" + "b.textContent='\\u003C';" + "b.style.cssText='position:fixed;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));z-index:2147483647;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:40px;height:40px;border:0;border-radius:20px;background:rgba(0,0,0,.55);color:#fff;font-size:26px;line-height:1;text-align:center;padding:0;margin:0;-webkit-tap-highlight-color:transparent;';" + "b.onclick=function(e){e.preventDefault();e.stopPropagation();location.href='" + _WEBVIEW_CLOSE_SCHEME + "://close';};" + "parent.appendChild(b);" + "}" + "if(document.body)addCloseBtn();" + "else document.addEventListener('DOMContentLoaded',addCloseBtn);" + "})();";
 
     #region Button
     public void DoClickOpenLoginPanel()
@@ -205,6 +203,49 @@ public class LobbyPanel : GameListener
         }
     }
 
+    private void _ShowLaunchGameWebView(string html)
+    {
+        GpmWebView.ShowHtmlString(html,
+            new GpmWebViewRequest.Configuration()
+            {
+                style = GpmWebViewStyle.FULLSCREEN,
+                orientation = GpmOrientation.PORTRAIT,
+                isClearCookie = true,
+                isClearCache = true,
+                isNavigationBarVisible = false,
+                isCloseButtonVisible = false,
+                margins = new GpmWebViewRequest.Margins
+                {
+                    hasValue = true,
+                    left = 0,
+                    top = 0,
+                    right = 0,
+                    bottom = 0
+                },
+                supportMultipleWindows = true,
+                addJavascript = _WEBVIEW_CLOSE_BUTTON_JS,
+#if UNITY_IOS
+                contentMode = GpmWebViewContentMode.MOBILE,
+                isMaskViewVisible = true,
+#endif
+            },
+            _OnLaunchGameWebViewCallback,
+            new List<string>() { _WEBVIEW_CLOSE_SCHEME });
+    }
+    private void _OnLaunchGameWebViewCallback(GpmWebViewCallback.CallbackType callbackType, string data, GpmWebViewError error)
+    {
+        switch (callbackType)
+        {
+            case GpmWebViewCallback.CallbackType.PageLoad:
+                GpmWebView.ExecuteJavaScript(_WEBVIEW_CLOSE_BUTTON_JS);
+                break;
+            case GpmWebViewCallback.CallbackType.Scheme:
+                if (string.IsNullOrEmpty(data) == false && data.StartsWith(_WEBVIEW_CLOSE_SCHEME))
+                    GpmWebView.Close();
+                break;
+        }
+    }
+
     private void Start()
     {
         m_LoginPanelPL.TryAutoLogin();
@@ -233,57 +274,6 @@ public class LobbyPanel : GameListener
             }
         }
     }
-    private void _OnLaunchGameWebViewCallback(GpmWebViewCallback.CallbackType callbackType, string data, GpmWebViewError error)
-    {
-        switch (callbackType)
-        {
-            case GpmWebViewCallback.CallbackType.PageLoad:
-                GpmWebView.ExecuteJavaScript(_WEBVIEW_CLOSE_BUTTON_JS);
-                break;
-            case GpmWebViewCallback.CallbackType.Scheme:
-                if (string.IsNullOrEmpty(data) == false && data.StartsWith(_WEBVIEW_CLOSE_SCHEME))
-                    GpmWebView.Close();
-                break;
-            case GpmWebViewCallback.CallbackType.Close:
-                _OnCloseWebviewCb?.Invoke();
-                _OnCloseWebviewCb = null;
-                break;
-        }
-    }
-    private void _ShowLaunchGameWebView(string html, Action onClosed = null)
-    {
-        _OnCloseWebviewCb = onClosed;
-        GpmWebViewRequest.CustomSchemePostCommand closeCommand = new();
-        closeCommand.Close(_WEBVIEW_CLOSE_SCHEME);
-        GpmWebView.ShowHtmlString(html,
-            new GpmWebViewRequest.Configuration()
-            {
-                style = GpmWebViewStyle.POPUP,
-                orientation = GpmOrientation.PORTRAIT,
-                isClearCookie = true,
-                isClearCache = true,
-                isNavigationBarVisible = false,
-                isCloseButtonVisible = false,
-                margins = new GpmWebViewRequest.Margins
-                {
-                    hasValue = true,
-                    left = 0,
-                    top = 0,
-                    right = 0,
-                    bottom = 0
-                },
-                supportMultipleWindows = true,
-                addJavascript = _WEBVIEW_CLOSE_BUTTON_JS,
-                customSchemePostCommand = closeCommand,
-#if UNITY_IOS
-                contentMode = GpmWebViewContentMode.MOBILE,
-                isMaskViewVisible = true,
-#endif
-            },
-            _OnLaunchGameWebViewCallback,
-            new List<string>() { _WEBVIEW_CLOSE_SCHEME });
-    }
-
     private void OnEnable()
     {
         m_CountUnreadMailsTMPUGUI.transform.parent.gameObject.SetActive(false);
