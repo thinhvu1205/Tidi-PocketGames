@@ -90,7 +90,7 @@ public class PopupMail : BasePopup
                 }
             case DataSender.CLAIM_MAIL:
                 {
-                    UIManager.Announce("Congratulations! You have received <color=yellow>" + JSON.Parse(_data)["amount"].AsLong + "</color>");
+                    UIManager.Announce("Congratulations! You have received <color=yellow>" + JSON.Parse(_data)["amount"].AsLong + "</color> " + Database.DB.Currency);
                     DataSender.GetProfile();
                     _UpdateMailsData();
                     break;

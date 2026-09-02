@@ -292,7 +292,7 @@ public class LobbyPanel : GameListener
                 DataSender.GetProfile();
                 UIManager.DoClickBase(m_AssetTMPUGUI.transform);
             });
-        m_GameIconsPG.SetControlCbs((aRT, aPI) => aRT.GetComponent<GameItem>().SetData((GameInfo)aPI.Data));
+        m_GameIconsPG.SetControlCbs((aRT, aPI) => { aRT.GetComponent<GameItem>().SetData((GameInfo)aPI.Data); });
         foreach (GamesTab tabGT in m_TabGTs)
         {
             tabGT.SetOnClickCb(() =>
@@ -301,7 +301,10 @@ public class LobbyPanel : GameListener
                 _GamesDataPIs.Clear();
                 if (tabGT.GetId() == 0)
                     foreach (KeyValuePair<int, GameInfo> aKVP in Database.DB.GamesInfoD)
+                    {
+                        aKVP.Value.IsRunShowingEffect = true;
                         _GamesDataPIs.Add(new() { Data = aKVP.Value });
+                    }
                 else
                 {
                     foreach (KeyValuePair<int, GameInfo> aKVP in Database.DB.GamesInfoD)
@@ -309,6 +312,7 @@ public class LobbyPanel : GameListener
                         foreach (GameTag tagGT in aKVP.Value.DataGTs)
                         {
                             if (tagGT.Id != tabGT.GetId()) continue;
+                            aKVP.Value.IsRunShowingEffect = true;
                             _GamesDataPIs.Add(new() { Data = aKVP.Value });
                             break;
                         }

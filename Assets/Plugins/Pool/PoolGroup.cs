@@ -26,16 +26,12 @@ public class PoolGroup : MonoBehaviour
 
     public void SetControlInfo(List<PoolInfo> _infoPIs)
     {
-        if (_infoPIs == null || _infoPIs.Count <= 0)
-        {
-            foreach (PoolObject aPO in _DataPOs) aPO.PutBackToPool();
-            return;
-        }
+        foreach (PoolObject aPO in _DataPOs) aPO.PutBackToPool();
+        if (_infoPIs == null || _infoPIs.Count <= 0) return;
         _CheckInitialize();
         _DataSR.StopMovement();
         m_PaddingT = _StartPaddingT; m_PaddingB = _StartPaddingB; m_PaddingL = _StartPaddingL; m_PaddingR = _StartPaddingR;
         m_SpacingV2 = new(_StartSpacingX, _StartSpacingY);
-        foreach (PoolObject aPO in _DataPOs) aPO.PutBackToPool();
         for (int i = 0; i < _infoPIs.Count; i++)
         {
             PoolInfo aPI = _infoPIs[i];

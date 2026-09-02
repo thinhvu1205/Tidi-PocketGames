@@ -127,6 +127,7 @@ public class GameInfo
     public Sprite IconS;
     public string Name, ImageUrl;
     public int Id;
+    public bool IsRunShowingEffect = true;
 }
 public class GameTag
 {
