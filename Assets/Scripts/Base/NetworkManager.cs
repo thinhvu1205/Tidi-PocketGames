@@ -14,6 +14,7 @@ public class NetworkManager : MonoBehaviour
     [HideInInspector] public bool UserLogout;
     private List<GameListener> _DataGLs = new();
     private Queue<Action> jobsResend = new();
+    private bool _IsGoogleSignInInitialized;
 
     public static NetworkManager getInstance() { return INSTANCE; }
     public void AddListener(GameListener _aGL) => _DataGLs.Add(_aGL);
@@ -192,17 +193,19 @@ public class NetworkManager : MonoBehaviour
         }
         for (int i = _DataGLs.Count - 1; i >= 0; i--) _DataGLs[i].HandleError(_apiName, bodyError);
     }
-    public void LogInGoogle()
+    public void LogInOrLinkGoogle(bool _isLogin = true)
     {
-        GoogleSignIn.Configuration = new()
+        if (!_IsGoogleSignInInitialized)
         {
-            WebClientId = Database.BASE_URL,
-            RequestIdToken = true,
-            UseGameSignIn = false,
-            ForceTokenRefresh = true
-        };
-        GoogleSignIn.DefaultInstance.SignOut();
-        GoogleSignIn.DefaultInstance.Disconnect();
+            GoogleSignIn.Configuration = new()
+            {
+                WebClientId = "344434163197-ci754vjla6kta2c540qk3lfhsnnti42o.apps.googleusercontent.com", // Web application type
+                RequestIdToken = true, // WebClientId MUST be Web application type in Google Console, this does not work with other types
+                UseGameSignIn = false,
+                ForceTokenRefresh = true
+            };
+            _IsGoogleSignInInitialized = true;
+        }
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(aGSIU =>
         {
             if (aGSIU.IsFaulted)
@@ -217,8 +220,8 @@ public class NetworkManager : MonoBehaviour
             else
             {
                 string googleToken = aGSIU.Result.IdToken;
-                Debug.Log("|   ) )=3 Google Sign-In success: " + aGSIU.Result.DisplayName + " | token: " + googleToken);
-                DataSender.LoginWithGoogle(googleToken);
+                if (_isLogin) DataSender.LoginWithGoogle(googleToken);
+                else DataSender.LinkGoogleAccount(googleToken);
             }
 
         }, TaskScheduler.FromCurrentSynchronizationContext());

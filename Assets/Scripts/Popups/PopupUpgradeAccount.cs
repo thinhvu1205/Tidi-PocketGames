@@ -4,7 +4,7 @@ using UnityEngine;
 public class PopupUpgradeAccount : BasePopup
 {
     [SerializeField]
-    private GameObject m_ReEnterPassword, m_ButtonConfirm, m_ButtonGGLogin, m_ButtonSupport247;
+    private GameObject m_ReEnterPassword, m_ButtonConfirm, m_ButtonGGLinking, m_ButtonSupport247;
     [SerializeField] private TMP_InputField m_UsernameTMPIF, m_PasswordTMPIF, m_ReEnterPasswordTMPIF;
 
     #region Button
@@ -33,10 +33,10 @@ public class PopupUpgradeAccount : BasePopup
         m_ReEnterPasswordTMPIF.ForceLabelUpdate();
         UIManager.DoClickBase();
     }
-    public void DoClickGoogleLogin()
+    public void DoClickGoogleLinking()
     {
-        NetworkManager.INSTANCE.LogInGoogle();
-        UIManager.DoClickBase(m_ButtonGGLogin.transform);
+        NetworkManager.INSTANCE.LogInOrLinkGoogle(false);
+        UIManager.DoClickBase(m_ButtonGGLinking.transform);
     }
     public void DoClickSupport247()
     {
@@ -51,10 +51,15 @@ public class PopupUpgradeAccount : BasePopup
         switch (_apiName)
         {
             case DataSender.REGISTER_QUICK_PLAY:
-            case DataSender.LINK_GOOGLE_ACCOUNT:
                 {
                     PlayerPrefs.SetString(Database.USERNAME, m_UsernameTMPIF.text);
                     PlayerPrefs.SetString(Database.PASSWORD, m_PasswordTMPIF.text);
+                    Destroy(gameObject);
+                    break;
+                }
+            case DataSender.LINK_GOOGLE_ACCOUNT:
+                {
+                    UIManager.Announce("Account linked successfully");
                     Destroy(gameObject);
                     break;
                 }

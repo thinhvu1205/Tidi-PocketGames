@@ -2778,7 +2778,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1739094440205786011}
         m_TargetAssemblyTypeName: PopupUpgradeAccount, Assembly-CSharp
-        m_MethodName: DoClickGoogleLogin
+        m_MethodName: DoClickGoogleLinking
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3291,7 +3291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PopupUpgradeAccount
   m_ReEnterPassword: {fileID: 5607433021672930438}
   m_ButtonConfirm: {fileID: 4753303234978931702}
-  m_ButtonGGLogin: {fileID: 6390262320473561674}
+  m_ButtonGGLinking: {fileID: 6390262320473561674}
   m_ButtonSupport247: {fileID: 3758345405582402345}
   m_UsernameTMPIF: {fileID: 535284334725577143}
   m_PasswordTMPIF: {fileID: 79513074423299497}

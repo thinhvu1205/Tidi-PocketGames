@@ -62,7 +62,7 @@ public class PopupLogin : BasePopup
     }
     public void DoClickGoogleLogin()
     {
-        NetworkManager.INSTANCE.LogInGoogle();
+        NetworkManager.INSTANCE.LogInOrLinkGoogle();
         UIManager.DoClickBase(m_ButtonGGLogin.transform);
     }
     public void DoClickFreePlay()

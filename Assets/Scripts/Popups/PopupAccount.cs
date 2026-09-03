@@ -66,9 +66,14 @@ public class PopupAccount : BasePopup
         {
             case DataSender.PROFILE:
             case DataSender.REGISTER_QUICK_PLAY:
+                {
+                    _UpdateDisplay();
+                    break;
+                }
             case DataSender.LINK_GOOGLE_ACCOUNT:
                 {
                     _UpdateDisplay();
+                    m_UpgradeAccountIOO.TurnOff();
                     break;
                 }
         }
