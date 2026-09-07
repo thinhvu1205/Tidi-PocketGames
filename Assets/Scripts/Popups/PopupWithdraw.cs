@@ -91,6 +91,15 @@ public class PopupWithdraw : BasePopup
                     }
                     break;
                 }
+            case DataSender.WITHDRAW:
+                {
+                    JSONNode dataJN = JSON.Parse(_data);
+                    JSONObject dataJO = dataJN["withdrawal"].AsObject;
+                    UIManager.Announce("Your request of withdrawing <color=yellow>" + dataJO["fiatAmount"] + " " + Database.DB.Currency + "</color> to " + dataJO["channel"] + " account id " + dataJO["receiver"] + " using <color=yellow>" + dataJO["amount"] + " coins</color> has been created successfully at " + Database.FormatDateTime(dataJO["createdAt"].Value, false) + "\nFollow the transaction status in History.",
+                        "Ok", "", () => m_WithdrawDetailsSHE.gameObject.SetActive(false), null, () => m_WithdrawDetailsSHE.gameObject.SetActive(false));
+                    DataSender.GetProfile();
+                    break;
+                }
         }
     }
     private void OnEnable()
@@ -142,9 +151,7 @@ public class PopupWithdraw : BasePopup
                 else
                 {
                     _HistoryPIs.Clear();
-                    foreach (HistoryWithdrawInfo aHWI in Database.DB.WithdrawHWIs)
-                        if (aPC.Name.Contains(aHWI.PaymentChannel))
-                            _HistoryPIs.Add(new() { Data = aHWI });
+                    foreach (HistoryWithdrawInfo aHWI in Database.DB.WithdrawHWIs) if (aPC.Name.Contains(aHWI.PaymentChannel)) _HistoryPIs.Add(new() { Data = aHWI });
                     bool isHaveData = _HistoryPIs.Count > 0;
                     m_TextNoWithdrawTf.gameObject.SetActive(!isHaveData);
                     m_HistorySR.transform.parent.gameObject.SetActive(isHaveData);
@@ -158,8 +165,8 @@ public class PopupWithdraw : BasePopup
                 aBtn.onClick.Invoke();
             }
         }
-        m_EffectiveBetTMPUGUI.SetText(Database.DB.TotalBet + "");
-        m_EffectiveWageringTMPUGUI.SetText(Database.DB.RequiredBet + "");
+        m_EffectiveBetTMPUGUI.SetText(Database.DB.RequiredBet + "");
+        m_EffectiveWageringTMPUGUI.SetText(Database.DB.TotalBet + "");
         DoClickTabReward();
     }
     protected override void Awake()

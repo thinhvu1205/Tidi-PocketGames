@@ -74,11 +74,11 @@ public class Database
         int t = Mathf.FloorToInt((float)_seconds);
         return (t / 60).ToString("00") + ":" + (t % 60).ToString("00");
     }
-    public static string FormatDateTime(string _original)
+    public static string FormatDateTime(string _original, bool _isLineSeparation = true)
     {
         DateTime aDT = DateTimeOffset.Parse(_original, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToLocalTime().DateTime;
-        string time = aDT.ToString("h:mm tt", CultureInfo.InvariantCulture).ToLower(), date = aDT.ToString("d/M/yyyy", CultureInfo.InvariantCulture);
-        return time + "\n" + date;
+        string time = aDT.ToString("h:mm tt", CultureInfo.InvariantCulture).ToLower(), date = aDT.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+        return time + (_isLineSeparation ? "\n" : " ") + date;
     }
     public static string FormatNumber(long _number) => string.Format("{0:n0}", _number);
     public static string FormatAndShortenNumber(long _number, int _floatPartLength = 2, long _minShortenedValue = 1000, bool _isHaveSpace = true)

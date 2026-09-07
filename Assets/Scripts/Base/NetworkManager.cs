@@ -175,8 +175,7 @@ public class NetworkManager : MonoBehaviour
             case DataSender.CLAIM_MAIL:
             case DataSender.DELETE_MAIL:
                 {
-                    JSONNode errorJN = JSON.Parse(bodyError);
-                    UIManager.Announce(errorJN["message"].Value);
+                    UIManager.Announce(JSON.Parse(bodyError)["message"].Value);
                     break;
                 }
             case DataSender.CLAIM_DEPOSIT:
@@ -186,7 +185,7 @@ public class NetworkManager : MonoBehaviour
                 }
             case DataSender.WITHDRAW:
                 {
-                    UIManager.Announce("Withdrawal request has been accepted");
+                    UIManager.Announce(JSON.Parse(bodyError)["message"].Value);
                     DataSender.GetProfile();
                     break;
                 }

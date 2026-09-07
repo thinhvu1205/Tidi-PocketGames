@@ -11,6 +11,7 @@ public class PopupMail : BasePopup
     [SerializeField] private Button m_ClaimRewardsBtn;
     [SerializeField] private PoolGroup m_MailsPG;
     [SerializeField] private TextMeshProUGUI m_MailDetailTitleTMPUGUI, m_MailDetailContentTMPUGUI;
+    [SerializeField] private RectTransform m_MailDetailContentRT;
     private List<PoolInfo> _MailPIs = new();
     private string _ReadMailId;
     private bool _IsWaitingMailsData;
@@ -125,6 +126,8 @@ public class PopupMail : BasePopup
             m_PanelMailDetailSHE.gameObject.SetActive(true);
             m_MailDetailTitleTMPUGUI.SetText((_aMI.Amount > 0 ? "<voffset=0.3em><sprite index=0></voffset>" : "") + _aMI.Title);
             m_MailDetailContentTMPUGUI.SetText(_aMI.Content);
+            m_MailDetailContentTMPUGUI.ForceMeshUpdate();
+            m_MailDetailContentRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, m_MailDetailContentTMPUGUI.textBounds.size.y);
             if (!_aMI.IsRead) DataSender.SetMailAsRead(_aMI.Id);
             m_ClaimRewardsBtn.gameObject.SetActive(!_aMI.IsClaimed);
         }

@@ -7,17 +7,17 @@ public class ItemHistoryWithdraw : MonoBehaviour
 
     public void SetData(HistoryWithdrawInfo _aHWI)
     {
-        m_TimeTMPUGUI.SetText(_aHWI.Time);
+        m_TimeTMPUGUI.SetText(Database.FormatDateTime(_aHWI.Time));
         m_PesosTMPUGUI.SetText(Database.FormatNumber(_aHWI.Asset) + " P");
         m_PhoneTMPUGUI.SetText(_aHWI.Phone);
         m_StatusTMPUGUI.SetText(_aHWI.Status switch
         {
             Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_COMPLETED or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_UNCONFIRMED => "<color=green>Completed</color>",
-            Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_REFUNDED => "<color=red>Refunded</color>",
+            Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_REFUNDED => "<color=yellow>Refunded</color>",
+            Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_REJECTED => "<color=red>Rejected</color>",
             Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_UNSPECIFIED or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_PENDING
-                or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_REJECTED or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_APPROVED
-                or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_PROCESSING or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_FAILED
-                or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_CANCELLED or _ => "<color=#4FD7FB>Processing</color>",
+                or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_APPROVED or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_PROCESSING
+                or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_FAILED or Database.WITHDRAW_STATUS.WITHDRAWAL_STATUS_CANCELLED or _ => "<color=#4FD7FB>Processing</color>",
         });
     }
 }

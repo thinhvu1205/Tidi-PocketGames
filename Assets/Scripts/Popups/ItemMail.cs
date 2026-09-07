@@ -33,7 +33,7 @@ public class ItemMail : MonoBehaviour
         _OnCliCkOpenCb ??= _onClickOpenCb;
         _OnSelectionCb ??= _onSelectionCb;
         string splitContent = _dataMI.Content.Split('\n')[0];
-        m_TitleTMPUGUI.SetText(_dataMI.Title[..Mathf.Min(_dataMI.Title.Length, 40)] + "...");
+        m_TitleTMPUGUI.SetText(_dataMI.Amount > 0 ? (_dataMI.Amount + " " + Database.DB.Currency) : _dataMI.Title[..Mathf.Min(_dataMI.Title.Length, 40)] + "...");
         m_ContentTMPUGUI.SetText(splitContent[..Mathf.Min(splitContent.Length, 40)] + "...");
         m_DateTimeTMPUGUI.SetText(Database.FormatDateTime(_dataMI.DateTime));
         m_BgUnread.SetActive(!_dataMI.IsRead);

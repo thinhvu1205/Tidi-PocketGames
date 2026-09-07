@@ -34,12 +34,14 @@ public class LobbyPanel : GameListener
     }
     public void DoClickHome()
     {
-        PlayerPrefs.SetString(Database.USERNAME, "");
-        PlayerPrefs.SetString(Database.PASSWORD, "");
-        Database.DB.PlayToken = "";
         UIManager.DoClickBase();
+        UIManager.INSTANCE.OpenPopupBanner();
+        foreach (Transform aTf in UIManager.GetParentPopup())
+        {
+            if (!aTf.TryGetComponent<PopupAccount>(out var aPA)) continue;
+            aPA.DoClickClose(true);
+        }
         UIManager.SelectAnOnOffItem(m_FooterIOOs, m_FooterIOOs[0]);
-        UIManager.INSTANCE.LoadScene(Database.MAIN_SCENE);
     }
     public void DoClickPromotion()
     {
