@@ -39,7 +39,7 @@ public class Database
     public List<HistoryWithdrawInfo> WithdrawHWIs = new();
     public LOGIN_TYPE LoginType = LOGIN_TYPE.NORMAL;
     public string PlayToken = "", Username, UserId, Currency, SocialTelegram, SocialMessenger, SupportTelegram, SupportMessenger;
-    public long Asset, TotalDeposit, TotalBet, RequiredBet;
+    public double Asset, TotalDeposit, TotalBet, RequiredBet;
     public int VipLevel;
     public bool IsMusic, IsSound, IsOfficial;
     private readonly SemaphoreSlim _GateSS = new(6, 6);
@@ -80,10 +80,10 @@ public class Database
         string time = aDT.ToString("h:mm tt", CultureInfo.InvariantCulture).ToLower(), date = aDT.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
         return time + (_isLineSeparation ? "\n" : " ") + date;
     }
-    public static string FormatNumber(long _number) => string.Format("{0:n0}", _number);
-    public static string FormatAndShortenNumber(long _number, int _floatPartLength = 2, long _minShortenedValue = 1000, bool _isHaveSpace = true)
+    public static string FormatNumber(double _number) => string.Format("{0:n0}", _number);
+    public static string FormatAndShortenNumber(double _number, int _floatPartLength = 2, long _minShortenedValue = 1000, bool _isHaveSpace = true)
     {
-        double absolute = Mathf.Abs(_number);
+        double absolute = Mathf.Abs((float)_number);
         if (absolute < Mathf.Abs(_minShortenedValue)) return FormatNumber(_number);
         string input = absolute.ToString(), floatPart = "", shortenedChar = "";
         int idNumberNextToDotFromTail = 0, intPart = 0, k = 1000, m = 1000000, b = 1000000000;
@@ -137,7 +137,7 @@ public class GameTag
 public class VipInfo
 {
     public int Level;
-    public long TotalDeposit, TotalBet;
+    public double TotalDeposit, TotalBet;
 }
 public class PaymentChannel
 {

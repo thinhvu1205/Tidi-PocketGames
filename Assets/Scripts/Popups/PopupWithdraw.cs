@@ -82,7 +82,7 @@ public class PopupWithdraw : BasePopup
                     {
                         Database.DB.WithdrawHWIs.Add(new()
                         {
-                            Asset = aJN["amount"].AsLong,
+                            Asset = aJN["amount"].AsDouble,
                             Phone = aJN["receiver"].Value,
                             Time = aJN["createdAt"].Value,
                             PaymentChannel = aJN["channel"].Value,

@@ -77,7 +77,7 @@ public class PopupMail : BasePopup
                             Id = aJN["id"].Value,
                             Title = aJN["title"].Value,
                             Content = aJN["content"].Value,
-                            Amount = aJN["amount"].AsLong,
+                            Amount = aJN["amount"].AsDouble,
                             IsClaimed = aJN["isClaimed"].AsBool,
                             IsRead = aJN["isRead"].AsBool,
                             DateTime = aJN["createdAt"].Value,
@@ -124,7 +124,7 @@ public class PopupMail : BasePopup
         {
             _ReadMailId = _aMI.Id;
             m_PanelMailDetailSHE.gameObject.SetActive(true);
-            m_MailDetailTitleTMPUGUI.SetText((_aMI.Amount > 0 ? "<voffset=0.3em><sprite index=0></voffset>" : "") + _aMI.Title);
+            m_MailDetailTitleTMPUGUI.SetText((_aMI.Amount > 0 ? "<voffset=0.3em><sprite index=0></voffset>" : "") + (_aMI.Amount > 0 ? _aMI.Amount + "" : _aMI.Title));
             m_MailDetailContentTMPUGUI.SetText(_aMI.Content);
             m_MailDetailContentTMPUGUI.ForceMeshUpdate();
             m_MailDetailContentRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, m_MailDetailContentTMPUGUI.textBounds.size.y);

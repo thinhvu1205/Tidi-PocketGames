@@ -24,6 +24,6 @@ public class ItemHistoryWithdraw : MonoBehaviour
 public class HistoryWithdrawInfo
 {
     public string Time, Phone, PaymentChannel;
-    public long Asset;
+    public double Asset;
     public Database.WITHDRAW_STATUS Status;
 }

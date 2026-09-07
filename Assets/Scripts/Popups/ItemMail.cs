@@ -47,6 +47,6 @@ public class ItemMail : MonoBehaviour
 public class MailInfo
 {
     public string Id, Title, Content, DateTime;
-    public long Amount;
+    public double Amount;
     public bool IsClaimed, IsRead, IsSelected;
 }

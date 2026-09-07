@@ -143,11 +143,11 @@ public class NetworkManager : MonoBehaviour
                     JO userDataJO = JSON.Parse(_data)["user"].AsObject;
                     Database.DB.UserId = userDataJO["sid"].Value;
                     Database.DB.Username = userDataJO["name"].Value;
-                    Database.DB.Asset = userDataJO["balance"].AsLong;
+                    Database.DB.Asset = userDataJO["balance"].AsDouble;
                     Database.DB.Currency = userDataJO["currency"].Value;
-                    Database.DB.TotalDeposit = userDataJO["totalDeposit"].AsLong;
-                    Database.DB.TotalBet = userDataJO["totalBet"].AsLong;
-                    Database.DB.RequiredBet = userDataJO["requiredBet"].AsLong;
+                    Database.DB.TotalDeposit = userDataJO["totalDeposit"].AsDouble;
+                    Database.DB.TotalBet = userDataJO["totalBet"].AsDouble;
+                    Database.DB.RequiredBet = userDataJO["requiredBet"].AsDouble;
                     Database.DB.VipLevel = userDataJO["vipLevel"].AsInt;
                     Database.DB.IsOfficial = userDataJO["official"].AsBool;
                     break;
