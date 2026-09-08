@@ -5,7 +5,7 @@ using WITHDRAW_STATUS = Database.WITHDRAW_STATUS;
 
 public class DataSender
 {
-    #region APIs
+    #region API-Keys
     public const string QUICK_PLAY = "api/v1/auth/quick-play";
     public const string REGISTER = "api/v1/auth/register";
     public const string REGISTER_QUICK_PLAY = "api/v1/auth/register-quick-play";

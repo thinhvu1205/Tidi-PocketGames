@@ -83,7 +83,7 @@ public class Database
     public static string FormatNumber(double _number) => string.Format("{0:n0}", _number);
     public static string FormatAndShortenNumber(double _number, int _floatPartLength = 2, long _minShortenedValue = 1000, bool _isHaveSpace = true)
     {
-        double absolute = Mathf.Abs((float)_number);
+        double absolute = _number < 0 ? -_number : _number;
         if (absolute < Mathf.Abs(_minShortenedValue)) return FormatNumber(_number);
         string input = absolute.ToString(), floatPart = "", shortenedChar = "";
         int idNumberNextToDotFromTail = 0, intPart = 0, k = 1000, m = 1000000, b = 1000000000;
