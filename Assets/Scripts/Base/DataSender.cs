@@ -23,6 +23,7 @@ public class DataSender
     public const string CLAIM_DEPOSIT = "api/v1/deposit/claim";
     public const string WITHDRAW_HISTORY = "api/v1/withdraw/mine";
     public const string WITHDRAW = "api/v1/withdraw";
+    public const string ATTRIBUTES = "api/v1/tracking/attributes";
     #endregion
 
     public static void QuickPlay()
@@ -68,6 +69,24 @@ public class DataSender
         => _SendGET(WITHDRAW_HISTORY, "", new JO() { ["page"] = 1, ["pageSize"] = 100, ["status"] = (int)WITHDRAW_STATUS.WITHDRAWAL_STATUS_UNSPECIFIED });
     public static void Withdraw(long _amount, string _account, string _channel)
         => _SendPOST(WITHDRAW, "", new JO() { ["amount"] = _amount, ["receiver"] = _account, ["channel"] = _channel });
+    public static void SendLoginAttributes()
+    {
+        _SendPOST(ATTRIBUTES, "", new JO()
+        {
+            ["utm_source"] = "",
+            ["utm_medium"] = "",
+            ["utm_campaign"] = "",
+            ["utm_content"] = "",
+            ["utm_term"] = "",
+            ["affiliate_id"] = "",
+            ["sub_id"] = "",
+            ["referrer"] = "",
+            ["landing_page"] = "",
+            ["platform"] = "2",
+            ["fbclid"] = "",
+            ["fbp"] = ""
+        });
+    }
 
     private static void _SendGET(string _apiName, string _tail = "", JO _dataJO = null) => NetworkManager.INSTANCE.SendGET(_apiName, _tail, _dataJO);
     private static void _SendPOST(string _apiName, string _tail = "", JO _dataJO = null) => NetworkManager.INSTANCE.SendPOST(_apiName, _tail, _dataJO);

@@ -83,6 +83,8 @@ public class NetworkManager : MonoBehaviour
                     Database.DB.LoginType = Database.LOGIN_TYPE.NORMAL;
                     DataSender.GetSettings();
                     DataSender.GetProfile();
+                    GtmTracker.SendCompleteRegistration();
+                    DataSender.SendLoginAttributes();
                     UIManager.INSTANCE.HideLoading();
                     break;
                 }
@@ -91,6 +93,7 @@ public class NetworkManager : MonoBehaviour
                     UIManager.Announce("Register successfully");
                     DataSender.GetSettings();
                     DataSender.GetProfile();
+                    GtmTracker.SendCompleteRegistration();
                     UIManager.INSTANCE.HideLoading();
                     break;
                 }

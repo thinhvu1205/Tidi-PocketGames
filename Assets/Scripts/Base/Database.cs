@@ -64,7 +64,6 @@ public class Database
                     _onCompleteCb?.Invoke();
                 }
                 else Debug.LogError("|   ) )=3 WebP decode failed | " + _aGI.ImageUrl + " | " + aE);
-
             }
         }
         finally { _GateSS.Release(); }

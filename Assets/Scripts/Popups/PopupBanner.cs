@@ -13,6 +13,7 @@ public class PopupBanner : BasePopup
     #region Button
     public void DoCLickBanner()
     {
+        UIManager.INSTANCE.OpenPopupDeposit();
         UIManager.DoClickBase();
     }
     #endregion
