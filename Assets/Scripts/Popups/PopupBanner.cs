@@ -13,7 +13,8 @@ public class PopupBanner : BasePopup
     #region Button
     public void DoCLickBanner()
     {
-        UIManager.INSTANCE.OpenPopupDeposit();
+        if (!string.IsNullOrEmpty(Database.DB.PlayToken)) UIManager.INSTANCE.OpenPopupDeposit();
+        else UIManager.Announce("Please SignIn first!");
         UIManager.DoClickBase();
     }
     #endregion

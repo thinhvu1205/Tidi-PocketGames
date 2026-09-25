@@ -16,7 +16,7 @@ public static class GtmTracker
     // };
     private static string _SessionId;
     private static bool _IsSessionStarted;
-    private const string _GTM_CONTAINER_ID = "GTM-5TLWDH72", _GA_MEASUREMENT_ID = "G-T37KEC9X8Q", _EVENT_COMPLETE_REGISTRATION = "CompleteRegistration",
+    private const string _GTM_CONTAINER_ID = "GTM-5TLWDH72", _GA_MEASUREMENT_ID = "G-T37KEC9X8Q", _EVENT_COMPLETE_REGISTRATION = "CompleteRegistration_unityapk",
         _GTM_CLIENT_ID = "GTM_CLIENT_ID", _GTM_SESSION_COUNT = "GTM_SESSION_COUNT", _WEB_PAGE_URL = "https://h5.rubyclubph.com/", _WEB_PAGE_TITLE = "Ruby Club";
 
     public static void SendCompleteRegistration()

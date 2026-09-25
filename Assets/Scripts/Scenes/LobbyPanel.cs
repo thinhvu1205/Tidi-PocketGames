@@ -54,7 +54,7 @@ public class LobbyPanel : GameListener
         UIManager.DoClickBase();
         if (string.IsNullOrEmpty(Database.DB.PlayToken))
         {
-            UIManager.Announce("PLease login first!");
+            UIManager.AnnounceSignInRequired();
             return;
         }
         if (m_FooterIOOs[2].IsTurnOn())
@@ -71,7 +71,7 @@ public class LobbyPanel : GameListener
         UIManager.DoClickBase(m_FooterIOOs[3].transform);
         if (string.IsNullOrEmpty(Database.DB.PlayToken))
         {
-            UIManager.Announce("PLease login first!");
+            UIManager.AnnounceSignInRequired();
             return;
         }
         UIManager.SelectAnOnOffItem(m_FooterIOOs, m_FooterIOOs[3]);
@@ -82,7 +82,7 @@ public class LobbyPanel : GameListener
         if (string.IsNullOrEmpty(Database.DB.PlayToken))
         {
             UIManager.DoClickBase(m_FooterIOOs[4].transform);
-            UIManager.Announce("PLease login first!");
+            UIManager.AnnounceSignInRequired();
             return;
         }
         foreach (Transform aTf in UIManager.GetParentPopup())
