@@ -7,12 +7,14 @@ public class PopupSupport : BasePopup
     #region Button
     public void DoClickMessenger()
     {
-        Application.OpenURL(Database.DB.SupportMessenger);
+        if (string.IsNullOrEmpty(Database.DB.SupportMessenger)) Application.OpenURL("https://www.facebook.com/rubyclub.ph");
+        else Application.OpenURL(Database.DB.SupportMessenger);
         UIManager.DoClickBase(m_ButtonMessengerTf);
     }
     public void DoClickTelegram()
     {
-        Application.OpenURL(Database.DB.SupportTelegram);
+        if (string.IsNullOrEmpty(Database.DB.SupportTelegram)) Application.OpenURL("https://t.me/rubyclubph");
+        else Application.OpenURL(Database.DB.SupportTelegram);
         UIManager.DoClickBase(m_ButtonTelegramTf);
     }
     #endregion
