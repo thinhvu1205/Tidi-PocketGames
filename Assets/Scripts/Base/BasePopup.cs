@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(ShowHideEffect))]
 public class BasePopup : GameListener
 {
-    protected Transform _ContentTf;
     protected Action _OnCloseCb;
     protected ShowHideEffect _EffectSHE;
 
@@ -23,7 +22,6 @@ public class BasePopup : GameListener
     protected override void Awake()
     {
         base.Awake();
-        _ContentTf = transform.GetChild(0);
         _EffectSHE = GetComponent<ShowHideEffect>();
     }
 }

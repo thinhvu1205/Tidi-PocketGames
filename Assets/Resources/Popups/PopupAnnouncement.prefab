@@ -617,6 +617,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1775999459522793019}
+  - component: {fileID: 3889735319286667142}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -647,6 +648,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &3889735319286667142
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775999459522793018}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1775999459969016073
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,8 +802,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1775999460031699637}
   - component: {fileID: 1775999460031699635}
-  - component: {fileID: 1775999460031699632}
   - component: {fileID: 941236631398083344}
+  - component: {fileID: 1775999460031699632}
   - component: {fileID: 2961759904636349593}
   m_Layer: 5
   m_Name: PopupAnnouncement
@@ -827,24 +840,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775999460031699636}
   m_CullTransparentMesh: 0
---- !u!114 &1775999460031699632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775999460031699636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97dc908d344b4a09acaa977d590d436, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Button1Tf: {fileID: 1775999459403659608}
-  m_Button2Tf: {fileID: 1775999460307680890}
-  m_ButtonCloseTf: {fileID: 1775999459969016086}
-  m_ContentTMPUGUI: {fileID: 3656058308968110988}
-  m_Button1TMPUGUI: {fileID: 4757645217776323177}
-  m_Button2TMPUGUI: {fileID: 8353190995697007586}
 --- !u!114 &941236631398083344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,6 +870,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1775999460031699632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775999460031699636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97dc908d344b4a09acaa977d590d436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Button1Tf: {fileID: 1775999459403659608}
+  m_Button2Tf: {fileID: 1775999460307680890}
+  m_ButtonCloseTf: {fileID: 1775999459969016086}
+  m_ContentTMPUGUI: {fileID: 3656058308968110988}
+  m_Button1TMPUGUI: {fileID: 4757645217776323177}
+  m_Button2TMPUGUI: {fileID: 8353190995697007586}
 --- !u!114 &2961759904636349593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,6 +901,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowHideEffect
   m_ShowHideEffect: 1
+  m_ContentTf: {fileID: 1775999459522793019}
+  m_ContentCG: {fileID: 3889735319286667142}
 --- !u!1 &1775999460307680893
 GameObject:
   m_ObjectHideFlags: 0

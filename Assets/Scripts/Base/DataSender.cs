@@ -29,49 +29,49 @@ public class DataSender
     public static void QuickPlay()
     {
         UIManager.INSTANCE.ShowLoading();
-        _SendPOST(QUICK_PLAY, "", new JO() { ["id"] = SystemInfo.deviceUniqueIdentifier });
+        _SendPOST(QUICK_PLAY, "", new() { ["id"] = SystemInfo.deviceUniqueIdentifier });
     }
     public static void Register(string _acc, string _pass)
     {
         UIManager.INSTANCE.ShowLoading();
-        _SendPOST(REGISTER, "", new JO() { ["userName"] = _acc, ["password"] = _pass });
+        _SendPOST(REGISTER, "", new() { ["userName"] = _acc, ["password"] = _pass });
     }
     public static void RegisterQuickPlay(string _acc, string _pass)
     {
         UIManager.INSTANCE.ShowLoading();
-        _SendPOST(REGISTER_QUICK_PLAY, "", new JO() { ["userName"] = _acc, ["password"] = _pass });
+        _SendPOST(REGISTER_QUICK_PLAY, "", new() { ["userName"] = _acc, ["password"] = _pass });
     }
     public static void Login(string _acc, string _pass)
     {
         UIManager.INSTANCE.ShowLoading();
-        _SendPOST(LOGIN, "", new JO() { ["userName"] = _acc, ["password"] = _pass });
+        _SendPOST(LOGIN, "", new() { ["userName"] = _acc, ["password"] = _pass });
     }
     public static void LoginWithGoogle(string _token)
     {
         UIManager.INSTANCE.ShowLoading();
-        _SendGET(GOOGLE_LOGIN, "", new JO() { ["token"] = _token });
+        _SendGET(GOOGLE_LOGIN, "", new() { ["token"] = _token });
     }
     public static void LinkGoogleAccount(string _token)
     {
         UIManager.INSTANCE.ShowLoading();
-        _SendPOST(LINK_GOOGLE_ACCOUNT, "", new JO() { ["token"] = _token });
+        _SendPOST(LINK_GOOGLE_ACCOUNT, "", new() { ["token"] = _token });
     }
     public static void GetSettings() => _SendGET(SETTINGS);
     public static void GetProfile() => _SendGET(PROFILE);
     public static void GetListGames() => _SendGET(LIST_GAME);
-    public static void LaunchGame(string _gameId) => _SendPOST(LAUNCH_GAME, "", new JO() { ["gameId"] = _gameId });
-    public static void GetListMail(int _pageId = 1, int _pageSize = 100) => _SendGET(LIST_MAIL, "", new JO() { ["page"] = _pageId, ["pageSize"] = _pageSize });
+    public static void LaunchGame(string _gameId) => _SendPOST(LAUNCH_GAME, "", new() { ["gameId"] = _gameId });
+    public static void GetListMail(int _pageId = 1, int _pageSize = 100) => _SendGET(LIST_MAIL, "", new() { ["page"] = _pageId, ["pageSize"] = _pageSize });
     public static void SetMailAsRead(string _mailId) => _SendGET(READ_MAIL, "/" + _mailId);
     public static void ClaimMailRewards(string _mailId) => _SendGET(CLAIM_MAIL, "/" + _mailId);
-    public static void DeleteMail(List<string> _mailIds) => _SendPOST(DELETE_MAIL, "", new JO() { ["ids"] = _mailIds });
-    public static void ClaimDeposit(string _transactionId) => _SendPOST(CLAIM_DEPOSIT, "", new JO() { ["tx"] = _transactionId });
+    public static void DeleteMail(List<string> _mailIds) => _SendPOST(DELETE_MAIL, "", new() { ["ids"] = _mailIds });
+    public static void ClaimDeposit(string _transactionId) => _SendPOST(CLAIM_DEPOSIT, "", new() { ["tx"] = _transactionId });
     public static void GetWithdrawHistory()
-        => _SendGET(WITHDRAW_HISTORY, "", new JO() { ["page"] = 1, ["pageSize"] = 100, ["status"] = (int)WITHDRAW_STATUS.WITHDRAWAL_STATUS_UNSPECIFIED });
+        => _SendGET(WITHDRAW_HISTORY, "", new() { ["page"] = 1, ["pageSize"] = 100, ["status"] = (int)WITHDRAW_STATUS.WITHDRAWAL_STATUS_UNSPECIFIED });
     public static void Withdraw(long _amount, string _account, string _channel)
-        => _SendPOST(WITHDRAW, "", new JO() { ["amount"] = _amount, ["receiver"] = _account, ["channel"] = _channel });
+        => _SendPOST(WITHDRAW, "", new() { ["amount"] = _amount, ["receiver"] = _account, ["channel"] = _channel });
     public static void SendLoginAttributes()
     {
-        _SendPOST(ATTRIBUTES, "", new JO()
+        _SendPOST(ATTRIBUTES, "", new()
         {
             ["utm_source"] = "",
             ["utm_medium"] = "",
@@ -84,7 +84,8 @@ public class DataSender
             ["landing_page"] = "",
             ["platform"] = "2",
             ["fbclid"] = "",
-            ["fbp"] = ""
+            ["fbp"] = "",
+            ["publisher_code"] = Database.PUBLISHER
         });
     }
 

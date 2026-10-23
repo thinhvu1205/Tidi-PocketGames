@@ -29,7 +29,7 @@ public class Database
         WITHDRAWAL_STATUS_CANCELLED = 8,
         WITHDRAWAL_STATUS_UNCONFIRMED = 9
     }
-    public const string BASE_URL = "https://rubyclubph.com/", USERNAME = "USERNAME", PASSWORD = "PASSWORD",
+    public const string BASE_URL = "https://rubyclubph.com/", USERNAME = "USERNAME", PASSWORD = "PASSWORD", PUBLISHER = "rubyclub_001",
         PU_MAIL = "Popups/PopupMail", PU_ANNOUNCEMENT = "Popups/PopupAnnouncement", PU_ACCOUNT = "Popups/PopupAccount", PU_SUPPORT = "Popups/PopupSupport",
         PU_UPGRADE_ACCOUNT = "Popups/PopupUpgradeAccount", PU_VIP = "Popups/PopupVip", PU_BANNER = "Popups/PopupBanner", PU_DEPOSIT = "Popups/PopupDeposit",
         PU_WITHDRAW = "Popups/PopupWithdraw", PU_RULE_CASH_FLOW = "Popups/PopupRuleCashFlow", MAIN_SCENE = "MainScene";

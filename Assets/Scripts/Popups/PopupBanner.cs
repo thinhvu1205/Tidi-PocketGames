@@ -28,8 +28,6 @@ public class PopupBanner : BasePopup
     private void OnEnable()
     {
         m_BannerImg.sprite = _BannersDataSs[_CurrentId];
-        _ContentTf.localScale = Vector3.zero;
-        _ContentTf.DOScale(1f, .2f).SetEase(Ease.OutBack);
     }
     protected override void Awake()
     {

@@ -13854,13 +13854,26 @@ GameObject:
   - component: {fileID: 1849088056067143673}
   - component: {fileID: 546805018242897156}
   - component: {fileID: 2313848310179203009}
+  - component: {fileID: 3998029372423660483}
   m_Layer: 5
-  m_Name: Bg
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &3998029372423660483
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998029372423660482}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &4024282701537860834
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14413,6 +14426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowHideEffect
   m_ShowHideEffect: 2
+  m_ContentTf: {fileID: 1849088056067143673}
+  m_ContentCG: {fileID: 3998029372423660483}
 --- !u!114 &4868802784094398806
 MonoBehaviour:
   m_ObjectHideFlags: 0

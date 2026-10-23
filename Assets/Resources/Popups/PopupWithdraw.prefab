@@ -1905,6 +1905,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowHideEffect
   m_ShowHideEffect: 1
+  m_ContentTf: {fileID: 2323837605336474232}
+  m_ContentCG: {fileID: 2713694339796313579}
 --- !u!1 &1497795339244760604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,6 +2168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2323837605336474232}
+  - component: {fileID: 2713694339796313579}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2196,6 +2199,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 1095, y: 950}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &2713694339796313579
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934733783556679292}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1943949551336846847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2328,6 +2343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowHideEffect
   m_ShowHideEffect: 2
+  m_ContentTf: {fileID: 92202171467309381}
+  m_ContentCG: {fileID: 589119696219565350}
 --- !u!1 &2029029192232209078
 GameObject:
   m_ObjectHideFlags: 0
@@ -4910,6 +4927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 92202171467309381}
+  - component: {fileID: 589119696219565350}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4944,6 +4962,18 @@ RectTransform:
   m_AnchoredPosition: {x: 19, y: 0}
   m_SizeDelta: {x: 1206, y: 2622}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &589119696219565350
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4394998029628747855}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4408415350587278471
 GameObject:
   m_ObjectHideFlags: 0

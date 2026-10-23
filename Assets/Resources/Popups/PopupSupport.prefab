@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowHideEffect
   m_ShowHideEffect: 1
+  m_ContentTf: {fileID: 1762990420702623514}
+  m_ContentCG: {fileID: 7032924680696937659}
 --- !u!1 &3998029372048001207
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1762990420702623514}
+  - component: {fileID: 7032924680696937659}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -489,6 +492,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1206, y: 2622}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &7032924680696937659
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555049725543467863}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5564274475142964469
 GameObject:
   m_ObjectHideFlags: 0
