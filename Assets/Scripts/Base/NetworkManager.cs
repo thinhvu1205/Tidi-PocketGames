@@ -13,8 +13,8 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager INSTANCE { get; private set; }
     [HideInInspector] public bool UserLogout;
     private List<GameListener> _DataGLs = new();
-    private Queue<Action> jobsResend = new();
     private bool _IsGoogleSignInInitialized;
+    public int CountTryInstallSent;
 
     public static NetworkManager getInstance() { return INSTANCE; }
     public void AddListener(GameListener _aGL) => _DataGLs.Add(_aGL);
@@ -68,6 +68,39 @@ public class NetworkManager : MonoBehaviour
             else if (aUWR.downloadedBytes > 0) _HandleReceivedData(_apiName, aUWR.downloadHandler.text);
         }
     }
+    public void LogInOrLinkGoogle(bool _isLogin = true)
+    {
+        if (!_IsGoogleSignInInitialized)
+        {
+            GoogleSignIn.Configuration = new()
+            {
+                WebClientId = "344434163197-ci754vjla6kta2c540qk3lfhsnnti42o.apps.googleusercontent.com", // Web application type
+                RequestIdToken = true, // WebClientId MUST be Web application type in Google Console, this does not work with other types
+                UseGameSignIn = false,
+                ForceTokenRefresh = true
+            };
+            _IsGoogleSignInInitialized = true;
+        }
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(aGSIU =>
+        {
+            if (aGSIU.IsFaulted)
+            {
+                foreach (Exception aE in aGSIU.Exception.InnerExceptions)
+                {
+                    if (aE is GoogleSignIn.SignInException aSIE) Debug.LogError("|   ) )=3 Google Sign-In error: Status: " + aSIE.Status + " | Message: " + aSIE.Message);
+                    else Debug.LogError("|   ) )=3 Google Sign-In unknown error: " + aE.GetType().Name + " | Message: " + aE.Message);
+                }
+            }
+            else if (aGSIU.IsCanceled) Debug.LogError("|   ) )=3 Google Sign-In was canceled");
+            else
+            {
+                string googleToken = aGSIU.Result.IdToken;
+                if (_isLogin) DataSender.LoginWithGoogle(googleToken);
+                else DataSender.LinkGoogleAccount(googleToken);
+            }
+        }, TaskScheduler.FromCurrentSynchronizationContext());
+    }
+
     private void _HandleReceivedData(string _apiName, string _data)
     {
         Debug.Log("|   ) )=3 " + _apiName + " | " + _data);
@@ -133,7 +166,6 @@ public class NetworkManager : MonoBehaviour
                         foreach (JSONNode aJN in amountJA) aPC.Amounts.Add(aJN.AsLong);
                         Database.DB.WithdrawPCs.Add(aPC);
                     }
-
                     // social and support
                     Database.DB.SocialMessenger = socialLinksJO["facebook"].Value;
                     Database.DB.SocialTelegram = socialLinksJO["telegram"].Value;
@@ -153,6 +185,11 @@ public class NetworkManager : MonoBehaviour
                     Database.DB.RequiredBet = userDataJO["requiredBet"].AsDouble;
                     Database.DB.VipLevel = userDataJO["vipLevel"].AsInt;
                     Database.DB.IsOfficial = userDataJO["official"].AsBool;
+                    break;
+                }
+            case DataSender.INSTALL:
+                {
+                    PlayerPrefs.SetInt(Database.STORED_IS_INSTALL_SENT, 1);
                     break;
                 }
         }
@@ -192,41 +229,19 @@ public class NetworkManager : MonoBehaviour
                     DataSender.GetProfile();
                     break;
                 }
+            case DataSender.INSTALL:
+                {
+                    _TrySendInstall();
+                    break;
+                }
         }
         for (int i = _DataGLs.Count - 1; i >= 0; i--) _DataGLs[i].HandleError(_apiName, bodyError);
     }
-    public void LogInOrLinkGoogle(bool _isLogin = true)
+    private void _TrySendInstall()
     {
-        if (!_IsGoogleSignInInitialized)
-        {
-            GoogleSignIn.Configuration = new()
-            {
-                WebClientId = "344434163197-ci754vjla6kta2c540qk3lfhsnnti42o.apps.googleusercontent.com", // Web application type
-                RequestIdToken = true, // WebClientId MUST be Web application type in Google Console, this does not work with other types
-                UseGameSignIn = false,
-                ForceTokenRefresh = true
-            };
-            _IsGoogleSignInInitialized = true;
-        }
-        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(aGSIU =>
-        {
-            if (aGSIU.IsFaulted)
-            {
-                foreach (Exception aE in aGSIU.Exception.InnerExceptions)
-                {
-                    if (aE is GoogleSignIn.SignInException aSIE) Debug.LogError("|   ) )=3 Google Sign-In error: Status: " + aSIE.Status + " | Message: " + aSIE.Message);
-                    else Debug.LogError("|   ) )=3 Google Sign-In unknown error: " + aE.GetType().Name + " | Message: " + aE.Message);
-                }
-            }
-            else if (aGSIU.IsCanceled) Debug.LogError("|   ) )=3 Google Sign-In was canceled");
-            else
-            {
-                string googleToken = aGSIU.Result.IdToken;
-                if (_isLogin) DataSender.LoginWithGoogle(googleToken);
-                else DataSender.LinkGoogleAccount(googleToken);
-            }
-
-        }, TaskScheduler.FromCurrentSynchronizationContext());
+        if (INSTANCE.CountTryInstallSent > 5) return;
+        DataSender.SendInstall();
+        INSTANCE.CountTryInstallSent++;
     }
 
     private void Awake()
@@ -238,5 +253,6 @@ public class NetworkManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
+        _TrySendInstall();
     }
 }

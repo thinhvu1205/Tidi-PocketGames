@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager INSTANCE;
     [HideInInspector] public List<PopupAnnouncement> PoolPAs = new();
-    [SerializeField] GameObject m_Loading;
+    [SerializeField] private GameObject m_Loading;
     [SerializeField] private Transform _ParentPopupsTf;
     private float _TimeShowLoading = 0;
 
@@ -84,30 +84,6 @@ public class UIManager : MonoBehaviour
         aBP.SetOnCloseCb(_onCloseCb);
         return aBP;
     }
-
-    // public void OnApplicationQuit()
-    // {
-    //     Debug.LogWarning("-=-=OnApplicationQuit ");
-    // }
-    // public void OnApplicationPause(bool _isPause)
-    // {
-    //     if (_isPause)
-    //     {
-    //         Debug.Log("-=-=OnApplicationPause ");
-    //         NetworkManager.getInstance().UserLogout = true;
-    //     }
-    //     else
-    //     {
-    //         StartCoroutine(delayTurnOffUserLogout());
-    //     }
-
-    //     IEnumerator delayTurnOffUserLogout()
-    //     {
-    //         yield return new WaitForSeconds(.5f);
-    //         if (INSTANCE.LobbyLP.gameObject.activeSelf)
-    //             NetworkManager.getInstance().UserLogout = false;
-    //     }
-    // }
 
     private void Update()
     {

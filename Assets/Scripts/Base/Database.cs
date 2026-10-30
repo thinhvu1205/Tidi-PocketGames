@@ -18,21 +18,20 @@ public class Database
     public enum LOGIN_TYPE { NONE = -1, NORMAL = 0, PLAYNOW = 1, FACEBOOK = 2, FACEBOOK_INSTANT = 3, APPLE_ID = 4, REG_ACC = 5 }
     public enum WITHDRAW_STATUS
     {
-        WITHDRAWAL_STATUS_UNSPECIFIED = 0,
-        WITHDRAWAL_STATUS_PENDING = 1,
-        WITHDRAWAL_STATUS_REJECTED = 2,
-        WITHDRAWAL_STATUS_APPROVED = 3,
-        WITHDRAWAL_STATUS_PROCESSING = 4,
-        WITHDRAWAL_STATUS_COMPLETED = 5,
-        WITHDRAWAL_STATUS_FAILED = 6,
-        WITHDRAWAL_STATUS_REFUNDED = 7,
-        WITHDRAWAL_STATUS_CANCELLED = 8,
-        WITHDRAWAL_STATUS_UNCONFIRMED = 9
+        UNSPECIFIED = 0, PENDING = 1, REJECTED = 2, APPROVED = 3, PROCESSING = 4, COMPLETED = 5, FAILED = 6, REFUNDED = 7, CANCELLED = 8, UNCONFIRMED = 9
     }
+#if UNITY_ANDROID
+    public const string PLATFORM = "PLATFORM_ANDROID";
+#elif UNITY_IOS
+    public const string PLATFORM = "PLATFORM_IOS",
+#else 
+    public const string PLATFORM = "";
+#endif
     public const string BASE_URL = "https://rubyclubph.com/", USERNAME = "USERNAME", PASSWORD = "PASSWORD", PUBLISHER = "rubyclub_001",
         PU_MAIL = "Popups/PopupMail", PU_ANNOUNCEMENT = "Popups/PopupAnnouncement", PU_ACCOUNT = "Popups/PopupAccount", PU_SUPPORT = "Popups/PopupSupport",
         PU_UPGRADE_ACCOUNT = "Popups/PopupUpgradeAccount", PU_VIP = "Popups/PopupVip", PU_BANNER = "Popups/PopupBanner", PU_DEPOSIT = "Popups/PopupDeposit",
-        PU_WITHDRAW = "Popups/PopupWithdraw", PU_RULE_CASH_FLOW = "Popups/PopupRuleCashFlow", MAIN_SCENE = "MainScene";
+        PU_WITHDRAW = "Popups/PopupWithdraw", PU_RULE_CASH_FLOW = "Popups/PopupRuleCashFlow", MAIN_SCENE = "MainScene", PLATFORM_ID = "2",
+        STORED_IS_INSTALL_SENT = "IsInstallSent";
     public Dictionary<int, GameInfo> GamesInfoD = new();
     public List<VipInfo> VipVIs = new();
     public List<PaymentChannel> DepositPCs = new(), WithdrawPCs = new();

@@ -82,6 +82,7 @@ public class PopupDeposit : BasePopup
                     choiceBtn.onClick.AddListener(() =>
                     {
                         _CurrentChosenAmount = amount;
+                        DataSender.SendInitiateCheckout(amount, aPC.Name);
                         m_DepositDetailsSHE.gameObject.SetActive(true);
                         m_SubTitleTMPUGUI.SetText("YOU ARE DEPOSITING <color=red>" + _CurrentChosenAmount + "</color> PESOS");
                         m_InstructionTMPUGUI.SetText("Please transfer money to our " + aPC.Name + " account");
