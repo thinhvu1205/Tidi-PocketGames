@@ -34,6 +34,23 @@ public class DataSender
         => _SendGET(WITHDRAW_HISTORY, "", new() { ["page"] = 1, ["pageSize"] = 100, ["status"] = (int)WITHDRAW_STATUS.UNSPECIFIED });
     public static void Withdraw(long _amount, string _account, string _channel)
         => _SendPOST(WITHDRAW, "", new() { ["amount"] = _amount, ["receiver"] = _account, ["channel"] = _channel });
+    public static void SendInstall()
+    {
+        if (PlayerPrefs.GetInt(Database.STORED_IS_INSTALL_SENT, 0) == 1) return; // already sent
+        _SendPOST(INSTALL, "", new()
+        {
+            ["platform"] = Database.PLATFORM,
+            ["publisher_code"] = Database.PUBLISHER,
+            ["event_id"] = SystemInfo.deviceUniqueIdentifier,
+            ["event_time"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+            ["fbclid"] = "",
+            ["fbp"] = "",
+            ["ttclid"] = "",
+            ["ttp"] = "",
+            ["app_version"] = Application.version,
+            ["os_version"] = SystemInfo.operatingSystem
+        });
+    }
     public static void SendLoginAttributes()
     {
         _SendPOST(ATTRIBUTES, "", new()
@@ -51,22 +68,6 @@ public class DataSender
             ["fbclid"] = "",
             ["fbp"] = "",
             ["publisher_code"] = Database.PUBLISHER
-        });
-    }
-    public static void SendInstall()
-    {
-        if (PlayerPrefs.GetInt(Database.STORED_IS_INSTALL_SENT, 0) == 1) return; // already sent
-        _SendPOST(INSTALL, "", new()
-        {
-            ["platform"] = Database.PLATFORM,
-            ["publisher_code"] = Database.PUBLISHER,
-            ["event_id"] = SystemInfo.deviceUniqueIdentifier,
-            ["event_time"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-            ["fbclid"] = "",
-            ["fbp"] = "",
-            ["ttclid"] = "",
-            ["ttp"] = "",
-            ["app_version"] = Application.version
         });
     }
     public static void SendInitiateCheckout(float _checkoutValue, string _paymentChannel)
